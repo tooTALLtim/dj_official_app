@@ -1,9 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Question
 
 def index(request):
-    return HttpResponse('Heya cowgirls and cowbows! \
-                         This is the polls index, boy howdy!')
+    latest_question_list = Question.objects.order_by
+
+def detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
+
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
+
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s" % question_id)
 
 def secret(request):
     return HttpResponse("Now this is just fun to add, no?")
