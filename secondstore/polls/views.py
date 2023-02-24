@@ -35,10 +35,8 @@ def vote(request, question_id):
                       'error_message': "You can't vote if you don't select a choice!"
                       })
     else:
-        Choice.objects.update(votes=F('votes') +1)
-        # removed race condition from tutorial
-        # selected_choice.votes += 1
-        # selected_choice.save()
+        selected_choice.votes += 1
+        selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
 def secret(request):
