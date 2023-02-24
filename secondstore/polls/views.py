@@ -2,14 +2,16 @@ from django.db.models import F
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.views import generic
 from .models import Choice, Question
 
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {
-        'latest_question_list': latest_question_list,
-    }
-    return render(request, 'polls/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Return the last five published questions"""
+        return Question.objects.order_by('-pub_date')[:5]
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -31,7 +33,7 @@ def vote(request, question_id):
                       })
     else:
         Choice.objects.update(votes=F('votes') +1)
-        #selected_choice.objects.update(votes=F('votes') + 1)
+        # removed race condition from tutorial
         # selected_choice.votes += 1
         # selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
