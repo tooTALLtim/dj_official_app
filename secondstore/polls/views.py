@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -29,8 +30,10 @@ def vote(request, question_id):
                       'error_message': "You can't vote if you don't select a choice!"
                       })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        Choice.objects.update(votes=F('votes') +1)
+        #selected_choice.objects.update(votes=F('votes') + 1)
+        # selected_choice.votes += 1
+        # selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
 def secret(request):
