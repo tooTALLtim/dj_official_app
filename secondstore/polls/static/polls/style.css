@@ -1,0 +1,8 @@
+li a {
+    color: green;
+    background-color: aqua; 
+}
+
+body {
+    background: white url("images/summit.jpg") no-repeat;
+}
