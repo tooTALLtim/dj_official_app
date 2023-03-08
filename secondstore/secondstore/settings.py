@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'secondstore',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': 'datab4s3!'
+        'PASSWORD': 'supersecretpassword!'
     }
 }
 
